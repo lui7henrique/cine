@@ -18,8 +18,11 @@ export const HomeTemplate = () => {
   const methods = useForm<FormType>({
     defaultValues: {
       type: "movies",
+      quantity: "3",
     },
   });
+
+  const quantity = methods.watch("quantity");
 
   const fetchResults = useCallback(async (data: FormType) => {
     const request: Record<
@@ -56,7 +59,7 @@ export const HomeTemplate = () => {
         </div>
       ) : (
         <div className="grid grid-cols-3 gap-4 mt-8">
-          {results.slice(0, 3).map((result) => {
+          {results.slice(0, Number(quantity)).map((result) => {
             return <ResultCard result={result} key={result.id} />;
           })}
         </div>

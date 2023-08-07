@@ -15,6 +15,33 @@ export const HomeActions = () => {
       <div className="flex gap-2 items-center">
         <Controller
           control={control}
+          name="quantity"
+          render={({ field }) => {
+            return (
+              <Select.Root onValueChange={field.onChange} defaultValue="3">
+                <Select.SelectTrigger placeholder="Quantity" />
+                <Select.SelectContent
+                  groups={[
+                    {
+                      label: "Quantity",
+                      options: Array.from({
+                        length: 20,
+                      }).map((_, index) => {
+                        return {
+                          label: String(index + 1),
+                          value: String(index + 1),
+                        };
+                      }),
+                    },
+                  ]}
+                />
+              </Select.Root>
+            );
+          }}
+        />
+
+        <Controller
+          control={control}
           name="type"
           render={({ field }) => {
             return (
