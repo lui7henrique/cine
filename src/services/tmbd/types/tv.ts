@@ -21,4 +21,6 @@ export type DiscoverTV = Promise<{
 
 export type DiscoverTVParams = {
   genreId?: string;
+  release_year?: string;
+  vote_average?: string;
 };

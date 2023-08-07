@@ -33,10 +33,15 @@ export const HomeTemplate = () => {
       tv: tmbd.discover.tv,
     };
 
-    const { genre, type } = data;
+    const { genre, type, release_year, vote_average } = data;
     const genreId = genre?.split("-")[1];
 
-    const { results } = await request[type]({ genreId });
+    const { results } = await request[type]({
+      genreId,
+      release_year,
+      vote_average,
+    });
+
     setResults(results);
   }, []);
 
@@ -52,13 +57,13 @@ export const HomeTemplate = () => {
       </FormProvider>
 
       {methods.formState.isSubmitting ? (
-        <div className="grid grid-cols-3 gap-4 mt-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {Array.from({ length: 3 }).map((_, index) => {
             return <ResultCardSkeleton key={index} />;
           })}
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-4 mt-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           {results.slice(0, Number(quantity)).map((result) => {
             return <ResultCard result={result} key={result.id} />;
           })}

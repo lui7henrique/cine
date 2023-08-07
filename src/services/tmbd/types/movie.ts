@@ -22,4 +22,6 @@ export type DiscoverMovie = Promise<{
 
 export type DiscoverMovieParams = {
   genreId?: string;
+  release_year?: string;
+  vote_average?: string;
 };

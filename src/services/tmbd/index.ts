@@ -30,22 +30,26 @@ export const tmbd = {
   },
   discover: {
     movie: async (params: DiscoverMovieParams) => {
-      const { genreId } = params;
+      const { genreId, release_year, vote_average } = params;
 
       const { data } = await url.get<DiscoverMovie>("/discover/movie", {
         params: {
           with_genres: genreId,
+          primary_release_year: release_year,
+          "vote_average.lte": vote_average,
         },
       });
 
       return data;
     },
     tv: async (params: DiscoverTVParams) => {
-      const { genreId } = params;
+      const { genreId, release_year, vote_average } = params;
 
       const { data } = await url.get<DiscoverTV>("/discover/tv", {
         params: {
           with_genres: genreId,
+          primary_release_year: release_year,
+          "vote_average.lte": vote_average,
         },
       });
 

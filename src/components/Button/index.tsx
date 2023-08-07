@@ -9,7 +9,7 @@ export const Button = (props: ButtonProps) => {
   const { isLoading } = props;
 
   const className =
-    "bg-pink-600 px-4 py-2 text-zinc-200 rounded-md hover:bg-pink-700 transition-all text-[16px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed";
+    "bg-pink-600 px-4 py-2 text-zinc-200 rounded-md hover:bg-pink-700 transition-all text-[16px] h-[40px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2";
 
   if (isLoading) {
     return (

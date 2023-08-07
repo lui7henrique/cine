@@ -2,12 +2,14 @@ import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { SelectItem } from "./SelectItem";
 
-type SelectContentGroup = {
+export type SelectOption = {
+  value: string | number;
   label: string;
-  options: Array<{
-    value: string | number;
-    label: string;
-  }>;
+};
+
+export type SelectContentGroup = {
+  label: string;
+  options: Array<SelectOption>;
 };
 
 type SelectContentProps = {
