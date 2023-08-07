@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta name="theme-color" content="#db2777" />
+        <link rel="icon" href="/favicon.png" sizes="any" />
       </Head>
 
       <body className="bg-zinc-950 text-zinc-500">
