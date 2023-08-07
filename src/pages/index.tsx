@@ -10,8 +10,7 @@ const thumbnail = {
 
 const defaultMetadata = {
   title: "Luiz Henrique • About me",
-  description:
-    "Hello, I'm Luiz Henrique! I'm a software engineer currently based in Brazil. 🖐",
+  description: "Movies and TV series recommendations in one click!",
 };
 
 export default function Home() {
