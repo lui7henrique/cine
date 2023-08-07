@@ -2,7 +2,7 @@ import { NextSeo } from "next-seo";
 import { HomeTemplate } from "src/templates/Home";
 
 const thumbnail = {
-  url: "https://lui7henrique.com/about.png",
+  url: `${process.env.VERCEL_URL}/thumbnail.png`,
   width: 1200,
   height: 630,
   alt: "Cine",
