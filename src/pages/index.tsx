@@ -9,17 +9,15 @@ const thumbnail = {
 };
 
 const defaultMetadata = {
-  title: "Luiz Henrique • About me",
+  title: "Cine",
   description: "Movies and TV series recommendations in one click!",
 };
 
 export default function Home() {
-  console.log({ testENV: process.env });
-
   return (
     <>
       <NextSeo
-        canonical={process.env.NEXT_PUBLIC_VERCEL_URL}
+        canonical={process.env.VERCEL_URL}
         twitter={{
           ...defaultMetadata,
           cardType: "summary_large_image",
@@ -27,9 +25,10 @@ export default function Home() {
         }}
         openGraph={{
           ...defaultMetadata,
-          url: process.env.NEXT_PUBLIC_VERCEL_URL,
+          url: process.env.VERCEL_URL,
           images: [thumbnail],
         }}
+        {...defaultMetadata}
       />
 
       <HomeTemplate />
