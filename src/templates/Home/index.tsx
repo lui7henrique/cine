@@ -1,48 +1,66 @@
 import { DefaultLayout } from "src/layout/Default";
-import { GenreSelect, GenreType } from "./GenreSelect";
-import { Select } from "src/components/Select";
-import { useState } from "react";
-import { Button } from "src/components/Button";
+import { HomeActions } from "./Actions";
+import { useCallback, useState } from "react";
+import { Type } from "./GenreSelect";
+import { tmbd } from "src/services/tmbd";
+
+import { FormProvider, useForm } from "react-hook-form";
+import { FormType } from "./types";
+import { Movie, TV } from "src/services/tmbd/types";
+import Image from "next/image";
+import { ResultCard, ResultCardSkeleton } from "src/components/ResultCard";
+
+type Results = Movie[] | TV[];
 
 export const HomeTemplate = () => {
-  const [genreType, setGenreType] = useState<GenreType>("tv");
+  const [results, setResults] = useState<Results>([]);
+
+  const methods = useForm<FormType>({
+    defaultValues: {
+      type: "movies",
+    },
+  });
+
+  const fetchResults = useCallback(async (data: FormType) => {
+    const request: Record<
+      Type,
+      (typeof tmbd)["discover"]["movie"] | (typeof tmbd)["discover"]["tv"]
+    > = {
+      movies: tmbd.discover.movie,
+      tv: tmbd.discover.tv,
+    };
+
+    const { genre, type } = data;
+    const genreId = genre?.split("-")[1];
+
+    const { results } = await request[type]({ genreId });
+    setResults(results);
+  }, []);
 
   return (
     <DefaultLayout>
-      <div className="flex flex-col md:flex-row gap-2 justify-center items-center h-full">
-        <div className="flex gap-2 items-center">
-          <Select.Root
-            defaultValue={genreType}
-            onValueChange={(value) => setGenreType(value as GenreType)}
-          >
-            <Select.SelectTrigger placeholder="Select type" />
-            <Select.SelectContent
-              groups={[
-                {
-                  label: "Type",
-                  options: [
-                    {
-                      label: "Movies",
-                      value: "movies",
-                    },
-                    {
-                      label: "TV",
-                      value: "tv",
-                    },
-                  ],
-                },
-              ]}
-            />
-          </Select.Root>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(fetchResults)}
+          className="flex flex-col md:flex-row gap-2 my-4 justify-between"
+        >
+          <HomeActions />
+        </form>
+      </FormProvider>
 
-          <GenreSelect type={genreType} />
-
-          {/* <p className="cursor-not-allowed opacity-50 text-sm">
-            More filters...
-          </p> */}
+      {methods.formState.isSubmitting ? (
+        <div className="grid grid-cols-3 gap-4 mt-8">
+          {Array.from({ length: 3 }).map((_, index) => {
+            return <ResultCardSkeleton key={index} />;
+          })}
         </div>
-        <Button>Give me a recommendation!</Button>
-      </div>
+      ) : (
+        <div className="grid grid-cols-3 gap-4 mt-8">
+          {results.slice(0, 3).map((result) => {
+            return <ResultCard result={result} key={result.id} />;
+          })}
+        </div>
+      )}
     </DefaultLayout>
   );
 };

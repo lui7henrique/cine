@@ -7,8 +7,8 @@ type DefaultLayoutProps = {
 
 export const DefaultLayout = (props: DefaultLayoutProps) => {
   return (
-    <div className="max-w-screen-lg mx-auto p-4 h-screen">
-      {/* <Header /> */}
+    <div className="max-w-screen-md mx-auto p-4 py-8 h-screen">
+      <Header />
 
       {props.children}
     </div>

@@ -1,64 +1,60 @@
+import { useFormContext, Controller } from "react-hook-form";
 import { useQuery } from "react-query";
 import { Select } from "src/components/Select";
 
-import { api } from "src/services/tmbd";
+import { tmbd } from "src/services/tmbd";
+import { FormType } from "./types";
+import { GetGenres } from "src/services/tmbd/types";
 
-export type GenreType = "tv" | "movies";
+export type Type = "tv" | "movies";
 
-type GenreSelectProps = {
-  type: GenreType;
-};
-
-const queryKeyByType: Record<GenreType, Array<string>> = {
+const queryKeyByType: Record<Type, Array<string>> = {
   movies: ["movies-genres"],
   tv: ["tv-genres"],
 };
 
-const queryFnByType: Record<GenreType, GetGenres> = {
-  movies: api.genres.movieList(),
-  tv: api.genres.tvList(),
+const queryFnByType: Record<Type, GetGenres> = {
+  movies: tmbd.genres.movieList(),
+  tv: tmbd.genres.tvList(),
 };
 
-export const GenreSelect = (props: GenreSelectProps) => {
-  const { type } = props;
+export const GenreSelect = () => {
+  const { control, watch } = useFormContext<FormType>();
+  const type = watch("type") || "tv";
 
   const { data, isLoading, isError } = useQuery(
     queryKeyByType[type],
     async () => await queryFnByType[type]
   );
 
-  if (isLoading) {
-    return (
-      <Select.Root>
-        <Select.SelectTrigger placeholder="Loading..." />
-      </Select.Root>
-    );
-  }
-
-  if (isError || !data) {
-    return (
-      <Select.Root>
-        <Select.SelectTrigger placeholder="Error xp" />
-      </Select.Root>
-    );
+  if (isLoading || isError || !data) {
+    return <></>;
   }
 
   return (
-    <Select.Root>
-      <Select.SelectTrigger placeholder="Genre" />
-      <Select.SelectContent
-        groups={[
-          {
-            label: "Genres",
-            options: data.genres.map((genre) => {
-              return {
-                label: genre.name,
-                value: genre.id,
-              };
-            }),
-          },
-        ]}
-      />
-    </Select.Root>
+    <Controller
+      name="genre"
+      control={control}
+      render={({ field }) => {
+        return (
+          <Select.Root onValueChange={field.onChange}>
+            <Select.SelectTrigger placeholder="Genre" />
+            <Select.SelectContent
+              groups={[
+                {
+                  label: "Genres",
+                  options: data.genres.map((genre) => {
+                    return {
+                      label: genre.name,
+                      value: `${genre.id}-${genre.id}`,
+                    };
+                  }),
+                },
+              ]}
+            />
+          </Select.Root>
+        );
+      }}
+    />
   );
 };
