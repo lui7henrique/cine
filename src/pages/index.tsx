@@ -5,7 +5,7 @@ const thumbnail = {
   url: "https://lui7henrique.com/about.png",
   width: 1200,
   height: 630,
-  alt: "About me",
+  alt: "Cine",
 };
 
 const defaultMetadata = {
@@ -21,7 +21,6 @@ export default function Home() {
         twitter={{
           ...defaultMetadata,
           cardType: "summary_large_image",
-          site: "@lui7henrique",
         }}
         openGraph={{
           ...defaultMetadata,
