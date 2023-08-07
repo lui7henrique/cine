@@ -21,7 +21,7 @@ export const fields: Fields = [
     type: "select",
     name: "quantity",
     placeholder: "Quantity",
-    defaultValue: "3",
+    defaultValue: "8",
     groups: [
       {
         label: "Quantity",

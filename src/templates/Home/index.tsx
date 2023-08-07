@@ -18,7 +18,7 @@ export const HomeTemplate = () => {
   const methods = useForm<FormType>({
     defaultValues: {
       type: "movies",
-      quantity: "3",
+      quantity: "8",
     },
   });
 
@@ -57,13 +57,13 @@ export const HomeTemplate = () => {
       </FormProvider>
 
       {methods.formState.isSubmitting ? (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          {Array.from({ length: 3 }).map((_, index) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pb-4">
+          {Array.from({ length: 8 }).map((_, index) => {
             return <ResultCardSkeleton key={index} />;
           })}
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pb-4">
           {results.slice(0, Number(quantity)).map((result) => {
             return <ResultCard result={result} key={result.id} />;
           })}

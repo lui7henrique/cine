@@ -46,7 +46,7 @@ export const GenreSelect = () => {
                   options: data.genres.map((genre) => {
                     return {
                       label: genre.name,
-                      value: `${genre.id}-${genre.id}`,
+                      value: `${genre.name}-${genre.id}`,
                     };
                   }),
                 },
