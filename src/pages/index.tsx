@@ -2,7 +2,7 @@ import { NextSeo } from "next-seo";
 import { HomeTemplate } from "src/templates/Home";
 
 const thumbnail = {
-  url: `${process.env.VERCEL_URL}/thumbnail.png`,
+  url: `https://cine-ruby.vercel.app/thumbnail.png`,
   width: 1200,
   height: 630,
   alt: "Cine",
